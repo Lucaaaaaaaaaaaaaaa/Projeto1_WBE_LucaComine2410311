@@ -2,19 +2,20 @@
   "name": "projeto1_wbe_lucacomine2410311",
   "version": "1.0.0",
   "description": "Projeto 1 da disciplina de desenvolvimento web back end na UTFPR pelo autor Luca Comine do RA 2410311",
-  "homepage": "https://github.com/Lucaaaaaaaaaaaaaaa/Projeto1_BackEnd#readme",
+  "homepage": "https://github.com/Lucaaaaaaaaaaaaaaa/Projeto1_WBE_LucaComine2410311#readme",
   "bugs": {
-    "url": "https://github.com/Lucaaaaaaaaaaaaaaa/Projeto1_BackEnd/issues"
+    "url": "https://github.com/Lucaaaaaaaaaaaaaaa/Projeto1_WBE_LucaComine2410311/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Lucaaaaaaaaaaaaaaa/Projeto1_BackEnd.git"
+    "url": "git+https://github.com/Lucaaaaaaaaaaaaaaa/Projeto1_WBE_LucaComine2410311.git"
   },
   "license": "ISC",
   "author": "Luca_Comine",
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

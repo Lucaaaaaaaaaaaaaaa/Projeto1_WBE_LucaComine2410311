@@ -4,20 +4,21 @@ import { logError } from './logger.js';
 import { ObjectId } from 'mongodb';
 
 class BaseModel {
+    // Construtor
     constructor(collectionName) {
         if (!collectionName) {
             throw new Error("O nome da coleção é obrigatório.");
         }
         this.collectionName = collectionName;
-        this.getCollection();
     }
 
+    // Obtém a coleção
     async getCollection() {
         const db = await connectDB();
         this.collection = db.collection(this.collectionName);
     }
 
-    // Insert ou Update
+    // Insere ou atualiza
     async save() {
         try {
             await this.getCollection();
@@ -43,43 +44,48 @@ class BaseModel {
         }
     }
 
-    // Find by ID
+    // Obtém a coleção (estático)
+    static async _getCollection() {
+        const db = await connectDB();
+        if (!this.collectionName) {
+            throw new Error("A classe modelo precisa definir a propriedade estática 'collectionName'.");
+        }
+        return db.collection(this.collectionName);
+    }
+
+    // Executor de operações
+    static async _executeDbOperation(operation, errorMessage) {
+        try {
+            const collection = await this._getCollection();
+            return await operation(collection);
+        } catch (error) {
+            await logError(error);
+            throw new Error(`${errorMessage}: ${error.message}`);
+        }
+    }
+
+    // Busca por ID
     static async findById(id) {
-        try {
-            const db = await connectDB();
-            const collection = db.collection(this.collectionName);
-            const result = await collection.findOne({ _id: new ObjectId(id) });
-            return result;
-        } catch (error) {
-            await logError(error);
-            throw new Error(`Erro ao buscar por ID: ${error.message}`);
-        }
+        return this._executeDbOperation(
+            (collection) => collection.findOne({ _id: new ObjectId(id) }),
+            'Erro ao buscar por ID'
+        );
     }
 
-    // Find
+    // Busca todos
     static async findAll(query = {}) {
-        try {
-            const db = await connectDB();
-            const collection = db.collection(this.collectionName);
-            const results = await collection.find(query).toArray();
-            return results;
-        } catch (error) {
-            await logError(error);
-            throw new Error(`Erro ao buscar documentos: ${error.message}`);
-        }
+        return this._executeDbOperation(
+            (collection) => collection.find(query).toArray(),
+            'Erro ao buscar documentos'
+        );
     }
 
-    // Delete
+    // Deleta por ID
     static async delete(id) {
-        try {
-            const db = await connectDB();
-            const collection = db.collection(this.collectionName);
-            const result = await collection.deleteOne({ _id: new ObjectId(id) });
-            return result;
-        } catch (error) {
-            await logError(error);
-            throw new Error(`Erro ao deletar documento: ${error.message}`);
-        }
+        return this._executeDbOperation(
+            (collection) => collection.deleteOne({ _id: new ObjectId(id) }),
+            'Erro ao deletar documento'
+        );
     }
 }
 

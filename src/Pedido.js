@@ -5,6 +5,7 @@ import { ObjectId } from 'mongodb';
 class Pedido extends BaseModel {
     static collectionName = 'pedidos';
 
+    // Construtor
     constructor({ usuarioId, produtos, status, total }) {
         super('pedidos');
 

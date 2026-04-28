@@ -4,6 +4,7 @@ import path from 'path';
 
 const logFilePath = path.join(process.cwd(), 'logs', 'errors.log');
 
+// Grava erro no log
 async function logError(error) {
     const timestamp = new Date().toISOString();
     const errorMessage = `${timestamp} - ERRO: ${error.stack || error}\n\n`;

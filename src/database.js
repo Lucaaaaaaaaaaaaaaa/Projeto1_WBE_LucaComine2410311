@@ -6,6 +6,7 @@ const client = new MongoClient(uri);
 
 let db;
 
+// Conecta ao banco
 async function connectDB() {
     if (db) return db;
     try {
@@ -15,10 +16,11 @@ async function connectDB() {
         return db;
     } catch (error) {
         console.error("Não foi possível conectar ao MongoDB.", error);
-        process.exit(1); 
+        throw error;
     }
 }
 
+// Fecha a conexão
 export async function closeDB() {
     return client.close();
 }

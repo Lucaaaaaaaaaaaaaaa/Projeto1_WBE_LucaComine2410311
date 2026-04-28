@@ -4,10 +4,10 @@ import BaseModel from './BaseModel.js';
 class Usuario extends BaseModel {
     static collectionName = 'usuarios';
 
+    // Construtor
     constructor({ nome, email, senha, endereco }) {
         super('usuarios'); 
 
-        // Validação de campos obrigatórios
         if (!nome || !email || !senha) {
             throw new Error("Campos 'nome', 'email' e 'senha' são obrigatórios.");
         }

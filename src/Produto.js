@@ -4,6 +4,7 @@ import BaseModel from './BaseModel.js';
 class Produto extends BaseModel {
     static collectionName = 'produtos';
 
+    // Construtor
     constructor({ nome, preco, descricao, estoque, categoria }) {
         super('produtos'); // Passa o nome da coleção para a classe pai
 

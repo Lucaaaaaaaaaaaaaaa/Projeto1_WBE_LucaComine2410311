@@ -4,13 +4,14 @@ import Usuario from './src/Usuario.js';
 import Pedido from './src/Pedido.js';
 import { closeDB } from './src/database.js';
 
+// Função principal
 async function main() {
     console.log("Iniciando aplicação de exemplo...");
 
     let novoUsuario, novoProduto, novoPedido;
 
     try {
-        // --- CRIAÇÃO DE USUÁRIO ---
+        // Cria usuário
         console.log("\n1. Criando um novo usuário...");
         novoUsuario = new Usuario({
             nome: "Cliente Teste",
@@ -20,7 +21,7 @@ async function main() {
         await novoUsuario.save();
         console.log("Usuário salvo com sucesso! ID:", novoUsuario._id);
 
-        // --- CRIAÇÃO DE PRODUTO ---
+        // Cria produto
         console.log("\n2. Criando um novo produto...");
         novoProduto = new Produto({
             nome: "Notebook Super Potente",
@@ -31,7 +32,7 @@ async function main() {
         await novoProduto.save();
         console.log("Produto salvo com sucesso! ID:", novoProduto._id);
 
-        // --- CRIAÇÃO DE PEDIDO ---
+        // Cria pedido
         console.log("\n3. Criando um novo pedido...");
         novoPedido = new Pedido({
             usuarioId: novoUsuario._id,
@@ -47,7 +48,7 @@ async function main() {
         await novoPedido.save();
         console.log("Pedido salvo com sucesso! ID:", novoPedido._id);
 
-        // --- BUSCANDO DADOS ---
+        // Busca dados
         console.log("\n4. Verificando dados salvos...");
         const usuarioSalvo = await Usuario.findById(novoUsuario._id);
         const pedidoSalvo = await Pedido.findById(novoPedido._id);
@@ -59,7 +60,7 @@ async function main() {
         console.error(error.message);
         process.exit(1); // Sair com código de erro
     } finally {
-        // --- LIMPEZA ---
+        // Limpa dados
         console.log("\nLimpando dados de teste...");
         if (novoUsuario) await Usuario.delete(novoUsuario._id);
         if (novoProduto) await Produto.delete(novoProduto._id);
